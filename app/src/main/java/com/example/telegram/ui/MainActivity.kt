@@ -1,10 +1,10 @@
-package com.example.telegram
+package com.example.telegram.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.telegram.R
 import com.example.telegram.databinding.ActivityMainBinding
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
@@ -40,6 +40,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFunc() {
         setSupportActionBar(mToolbar)
+        supportFragmentManager.beginTransaction()
+            .add(R.id.dataContainer, ChatsFragment())
+            .commit()
         createHeader()
         createDrawer()
     }
@@ -118,7 +121,12 @@ class MainActivity : AppCompatActivity() {
                     .withSelectable(false)
             ).withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
                 override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
-                    Toast.makeText(this@MainActivity, "$position", Toast.LENGTH_SHORT).show()
+                    when (position) {
+                        7 -> supportFragmentManager.beginTransaction()
+                            .addToBackStack("")
+                            .add(R.id.dataContainer, SettingsFragment())
+                            .commit()
+                    }
                     return false
                 }
             })
